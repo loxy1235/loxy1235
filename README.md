@@ -20,7 +20,8 @@ These functional requirements include;
 Tools and libraries to Implement CBAC
 
 
-Creating a Login Website with Context-Based Access Control (CBAC)
+## Creating a Login Website with Context-Based Access Control (CBAC)
+
 Here's a breakdown of tools and libraries to implement CBAC on a simple login website using PHP and phpMyAdmin:
 
 1. Website Creation Tools:
@@ -44,20 +45,30 @@ PHP: This scripting language will handle user login, data processing, and commun
  Database:
 MySQL Database with phpMyAdmin: This is a great option for managing user data and access control settings.
 
-6.
-CBAC Implementation:
+
+## CBAC Implementation:
+
 Implementing Location-Based Access Control (LBAC) with IP Geolocation (PHP)
+
 1.
 Choose an IP Geolocation Service:
+
 There are various free and paid IP geolocation services available. Here are two popular options:
+
 MaxMind GeoIP2: https://www.maxmind.com/ (Offers a free tier with limited usage)
+
 FreeGeoIP: https://freegeoip.io/ (Free service with limitations)
+
 3. 
 Install Required Libraries:
+
 For both services, you'll likely need to use a library to interact with their API in PHP. Here are some options:
+
 MaxMind GeoIP2: Provides a PHP library you can download from their website.
+
 FreeGeoIP: You can use libraries like Guzzle or directly make API calls using cURL.
-4. 
+
+5. 
 Login Script (index.php) - Modifications:
 
 User Login Form: Maintain a form for username and password (if using password-based authentication).
