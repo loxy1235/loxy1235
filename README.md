@@ -24,15 +24,28 @@ Creating a Login Website with Context-Based Access Control (CBAC)
 Here's a breakdown of tools and libraries to implement CBAC on a simple login website using PHP and phpMyAdmin:
 
 1. Website Creation Tools:
-Frontend: You can choose from various options for creating the website's user interface (UI). Some popular choices include:
-HTML, CSS, and JavaScript: These fundamental web development languages offer full control over the website's look and feel. However, they require more coding knowledge.
-Web Frameworks: Frameworks like Bootstrap or Foundation can provide pre-built UI components and simplify website development.
-Content Management Systems (CMS): Platforms like WordPress offer a user-friendly interface for creating websites without extensive coding. However, customizing CBAC features might require additional plugins or coding knowledge.
-2. Backend (Server-Side):
+Some popular choices include
+HTML, CSS, and JavaScript
+
+
+These fundamental web development languages offer full control over the website's look and feel. However, they require more coding knowledge.
+
+Web Frameworks: 
+Frameworks like Bootstrap or Foundation can provide pre-built UI components and simplify website development.
+
+Content Management Systems (CMS): 
+Platforms like WordPress offer a user-friendly interface for creating websites without extensive coding. However, customizing CBAC features might require additional plugins or coding knowledge.
+
+
+3. Backend (Server-Side)
 PHP: This scripting language will handle user login, data processing, and communication with the database.
-3. Database:
+
+4.
+ Database:
 MySQL Database with phpMyAdmin: This is a great option for managing user data and access control settings.
-4. CBAC Implementation:
+
+6.
+CBAC Implementation:
 Implementing Location-Based Access Control (LBAC) with IP Geolocation (PHP)
 1.
 Choose an IP Geolocation Service:
@@ -46,66 +59,124 @@ MaxMind GeoIP2: Provides a PHP library you can download from their website.
 FreeGeoIP: You can use libraries like Guzzle or directly make API calls using cURL.
 4. 
 Login Script (index.php) - Modifications:
+
 User Login Form: Maintain a form for username and password (if using password-based authentication).
+
 IP Geolocation Integration:
+
 PHP
+
 // Include necessary library (replace with your chosen library)
+
 require_once('path/to/geoip2.phar');
+
 // Get user's IP address
+
 $user_ip = $_SERVER['REMOTE_ADDR'];
+
 // Use the GeoIP2 library (replace with your library's usage)
+
 $reader = new GeoIp2\DatabaseReader('path/to/GeoLite2-City.mmdb');
+
 $record = $reader->city($user_ip);
+
 // Extract relevant location data (replace with specific fields)
+
 $country_code = $record['country']['iso_code'];
+
 $city_name = $record['city']['name'];
+
 // Alternatively, use FreeGeoIP API (replace with their API endpoint and parsing logic)
+
 $ip_data = file_get_contents("https://api.freegeoip.app/json/$user_ip");
+
 $ip_data = json_decode($ip_data, true);
+
 $country_code = $ip_data['country_code'];
+
 $city_name = $ip_deta['city'];
+
 Use code with caution.
+
 content_copy
-5. 
+
+6.
 Definition of Authorized Locations:
+
 Create an array or database table to store authorized locations within your organization (e.g., building names, floor numbers, or internal IP ranges).
+
 PHP
+
 $authorized_locations = [
+
   "Building A - Floor 1",
+  
   "Building B - Floor 2",
+  
   "192.168.1.0/24" // Example internal network IP range
+  
 ];
+
 Use code with caution.
+
 content_copy
-6. Access Control Logic:
+
+8. Access Control Logic:
+
 PHP
+
 // Check if user's location is authorized
+
 $location_authorized = false;
+
 // Example check based on country code and city (modify based on your needs)
+
 if (in_array("$country_code - $city_name", $authorized_locations)) {
+
   $location_authorized = true;
+  
 }
+
 else
+
 {
   // Check if IP belongs to your internal network range (adapt based on your IP range)
+  
   $ip_segments = explode('.', $user_ip);
+  
   $network_address = implode('.', array_slice($ip_segments, 0, 3)) . ".0";
+  
   if (in_array($network_address, $authorized_locations)) {
+  
     $location_authorized = true;
   }
+  
 }
+
 // Grant access or display error message
+
 if ($location_authorized) {
+
   // User is authorized, proceed with login logic and redirection
+  
 } else {
+
   // User is not authorized, display error message
+  
   echo "Access denied! Login allowed only from authorized locations.";
+  
 }
+
 content_copy
-7.
+
+10.
+
 Remember:
+
 Replace placeholders like library paths and location data extraction logic with your chosen service and library's specific requirements.
+
 Adapt the access control logic to match your specific authorized locations format (e.g., building names, IP ranges).
+
 final Implemention is proper error handling and user feedback mechanisms.
 
 
